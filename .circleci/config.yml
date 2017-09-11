@@ -7,8 +7,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build docker
-          command: 'docker build -t devops .'
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
   test:
     docker:
       - image: circleci/node:6.10.3
@@ -16,4 +25,4 @@ jobs:
       - checkout
       - run:
           name: Test
-          command: docker run devops npm test
+          command: npm test
