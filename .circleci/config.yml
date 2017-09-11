@@ -7,5 +7,5 @@ jobs:
        - checkout
        - run: echo "hello world"
        - deploy:
-         name: Now
-         command: sh deployments/qa.sh
+            name: Now
+            command: sh deployments/qa.sh
