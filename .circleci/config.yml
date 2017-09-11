@@ -1,8 +1,19 @@
 version: 2
 jobs:
-   build:
-     docker:
-       - image: circleci/node:6.10.3
-     steps:
-       - checkout
-       - run: echo "hello world"
+  build:
+    # The primary container is an instance of the first list image listed. Your build commands run in this container.
+    docker:
+      - image: circleci/node:6.10.3
+    steps:
+      - checkout
+      - run:
+          name: build docker
+          command: 'docker build -t devops .'
+  test:
+    docker:
+      - image: circleci/node:6.10.3
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: docker run devops npm test
